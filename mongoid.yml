@@ -1,0 +1,8 @@
+development:
+  sessions:
+    default:
+      hosts:
+        - linus.mongohq.com:10081
+      database: unobtanium
+      username: hello
+      password: JRX859c8KfNz5EeW
