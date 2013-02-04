@@ -7,7 +7,7 @@
 <% form_tag "/signup" do %>
   <p>
     <%= label_tag "email" %>
-    <%= text_field_tag "email", :value => @form.values[:email] %>
+    <%= text_field_tag "email", :value => @form.params[:email] %>
   </p>
   <p>
     <%= label_tag "password" %>
