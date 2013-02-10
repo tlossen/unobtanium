@@ -13,7 +13,7 @@ class CandidateApp < Sinatra::Base
   enable :sessions
   set :session_secret, 'yadayadax'
 
-  def new_client
+  def github_client
     OAuth2::Client.new('77c712b815c7ce3ec6e2', '675e7872c077ed2b2907e7752ae9cd7b2f87176b',
       :site => 'https://api.github.com',
       :authorize_url => 'https://github.com/login/oauth/authorize',
@@ -25,12 +25,12 @@ class CandidateApp < Sinatra::Base
   end
 
   get '/auth/github' do
-    redirect new_client.auth_code.authorize_url
+    redirect(github_client.auth_code.authorize_url)
   end
 
   get '/auth/github/callback' do
     begin
-      access_token = new_client.auth_code.get_token(params[:code], :redirect_uri => request.url)
+      access_token = github_client.auth_code.get_token(params[:code])
       puts "token: #{access_token.token}"
       @user = JSON.parse(access_token.get('/user').body)
       erb :auth
