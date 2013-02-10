@@ -20,11 +20,8 @@ class CandidateApp < Sinatra::Base
       :token_url => 'https://github.com/login/oauth/access_token')
   end
 
-  def redirect_uri(path = '/auth/github/callback', query = nil)
-    uri = URI.parse(request.url)
-    uri.path  = path
-    uri.query = query
-    uri.to_s
+  def redirect_uri
+    "http://app.unobtanium.cc/auth/github/callback"
   end
 
   get '/' do
@@ -33,13 +30,14 @@ class CandidateApp < Sinatra::Base
 
   get '/auth/github' do
     url = new_client.auth_code.authorize_url(
-      :redirect_uri => "http://app.unobtanium.cc/auth/github/callback",
-      :scope => 'email'
+      # :redirect_uri => "http://app.unobtanium.cc/auth/github/callback",
+      :scope => 'user:email'
     )
     redirect url
   end
 
   get '/auth/github/callback' do
+    puts "request url: #{request.url}"
     puts "received code: #{params[:code]}"
     begin
       access_token = new_client.auth_code.get_token(params[:code], :redirect_uri => redirect_uri)
