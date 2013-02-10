@@ -15,9 +15,9 @@ class CandidateApp < Sinatra::Base
 
   def new_client
     OAuth2::Client.new('77c712b815c7ce3ec6e2', '675e7872c077ed2b2907e7752ae9cd7b2f87176b',
-      :site => 'https://github.com',
-      :authorize_path => '/login/oauth/authorize',
-      :access_token_path => '/login/oauth/access_token')
+      :site => 'https://api.github.com',
+      :authorize_url => 'https://github.com/login/oauth/authorize',
+      :token_url => 'https://github.com/login/oauth/access_token')
   end
 
   def redirect_uri(path = '/auth/github/callback', query = nil)
@@ -32,20 +32,18 @@ class CandidateApp < Sinatra::Base
   end
 
   get '/auth/github' do
-    url = new_client.web_server.authorize_url(
-      :redirect_uri => redirect_uri,
-      :scope => 'email,offline_access'
-    )
+    url = new_client.auth_code.authorize_url(:redirect_uri => redirect_uri, :scope => 'email')
     puts "Redirecting to URL: #{url.inspect}"
     redirect url
   end
 
   get '/auth/github/callback' do
+    puts params[:code]
     begin
-      access_token = new_client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri)
-      user = JSON.parse(access_token.get('/api/v2/json/user/show'))
+      access_token = new_client.auth_code.get_token(params[:code], :redirect_uri => redirect_uri)
+      user = JSON.parse(access_token.get('/user').body)
       "<p>Your OAuth access token: #{access_token.token}</p><p>Your extended profile data:\n#{user.inspect}</p>"
-    rescue OAuth2::HTTPError
+    rescue OAuth2::Error => e
       %(<p>Outdated ?code=#{params[:code]}:</p><p>#{$!}</p><p><a href="/auth/github">Retry</a></p>)
     end
   end
