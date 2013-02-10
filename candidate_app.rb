@@ -20,31 +20,22 @@ class CandidateApp < Sinatra::Base
       :token_url => 'https://github.com/login/oauth/access_token')
   end
 
-  def redirect_uri
-    "http://app.unobtanium.cc/auth/github/callback"
-  end
-
   get '/' do
     erb :index
   end
 
   get '/auth/github' do
-    url = new_client.auth_code.authorize_url(
-      # :redirect_uri => "http://app.unobtanium.cc/auth/github/callback",
-      :scope => 'user:email'
-    )
-    redirect url
+    redirect new_client.auth_code.authorize_url
   end
 
   get '/auth/github/callback' do
-    puts "request url: #{request.url}"
-    puts "received code: #{params[:code]}"
     begin
-      access_token = new_client.auth_code.get_token(params[:code], :redirect_uri => redirect_uri)
-      user = JSON.parse(access_token.get('/user').body)
-      "<p>Your OAuth access token: #{access_token.token}</p><p>Your extended profile data:\n#{user.inspect}</p>"
+      access_token = new_client.auth_code.get_token(params[:code], :redirect_uri => request.url)
+      puts "token: #{access_token.token}"
+      @user = JSON.parse(access_token.get('/user').body)
+      erb :auth
     rescue OAuth2::Error => e
-      %(<p>Outdated ?code=#{params[:code]}:</p><p>#{$!}</p><p><a href="/auth/github">Retry</a></p>)
+      "<pre>#{e.backtrace}</pre>"
     end
   end
 
