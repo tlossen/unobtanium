@@ -6,4 +6,5 @@ $:.unshift Dir.pwd + "/lib"
 
 require "token"
 require "candidate"
+require "forms"
 

@@ -1,51 +1,11 @@
 require "bundler/setup"
 require "sinatra/base"
 require 'padrino-helpers'
+require 'oauth2'
+require 'json'
 
 load "lib/boot.rb"
 
-
-class Form
-  attr_reader :params, :errors
-
-  def initialize(params = nil)
-    params ||= {}
-    @params = Hash[params.to_a.map { |k,v| [k.to_sym, v] }]
-    @errors = []
-  end
-end
-
-class Signup < Form
-  def initialize(params)
-    super
-    @errors << "Please enter a valid email" unless email =~ /^.+\@.+\.\w+$/
-  end
-
-  def email
-    (params[:email] || "").strip
-  end
-end
-
-class Signup2 < Form
-  def initialize(params)
-    super
-    p @params
-    @errors << "Please enter 'Job Title'" if job_title.empty?
-    @errors << "Please select 'Company Age'" if company_age.empty?
-  end
-
-  def job_title
-    (params[:job_title] || "").strip
-  end
-
-  def company_age
-    values = []
-    values << 'baby' if params[:company_age_baby]
-    values << 'toddler' if params[:company_age_toddler]
-    values << 'child' if params[:company_age_child]
-    values
-  end
-end
 
 
 class CandidateApp < Sinatra::Base
@@ -53,8 +13,41 @@ class CandidateApp < Sinatra::Base
   enable :sessions
   set :session_secret, 'yadayadax'
 
+  def new_client
+    OAuth2::Client.new('77c712b815c7ce3ec6e2', '675e7872c077ed2b2907e7752ae9cd7b2f87176b',
+      :site => 'https://github.com',
+      :authorize_path => '/login/oauth/authorize',
+      :access_token_path => '/login/oauth/access_token')
+  end
+
+  def redirect_uri(path = '/auth/github/callback', query = nil)
+    uri = URI.parse(request.url)
+    uri.path  = path
+    uri.query = query
+    uri.to_s
+  end
+
   get '/' do
     erb :index
+  end
+
+  get '/auth/github' do
+    url = new_client.web_server.authorize_url(
+      :redirect_uri => redirect_uri,
+      :scope => 'email,offline_access'
+    )
+    puts "Redirecting to URL: #{url.inspect}"
+    redirect url
+  end
+
+  get '/auth/github/callback' do
+    begin
+      access_token = new_client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri)
+      user = JSON.parse(access_token.get('/api/v2/json/user/show'))
+      "<p>Your OAuth access token: #{access_token.token}</p><p>Your extended profile data:\n#{user.inspect}</p>"
+    rescue OAuth2::HTTPError
+      %(<p>Outdated ?code=#{params[:code]}:</p><p>#{$!}</p><p><a href="/auth/github">Retry</a></p>)
+    end
   end
 
   get '/signup/:new?' do
