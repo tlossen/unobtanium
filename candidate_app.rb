@@ -32,7 +32,10 @@ class CandidateApp < Sinatra::Base
   end
 
   get '/auth/github' do
-    url = new_client.auth_code.authorize_url(:redirect_uri => redirect_uri, :scope => 'email')
+    url = new_client.auth_code.authorize_url(
+      :redirect_uri => "http://app.unobtanium.cc/auth/github/callback",
+      :scope => 'email'
+    )
     puts "Redirecting to URL: #{url.inspect}"
     redirect url
   end
