@@ -36,12 +36,11 @@ class CandidateApp < Sinatra::Base
       :redirect_uri => "http://app.unobtanium.cc/auth/github/callback",
       :scope => 'email'
     )
-    puts "Redirecting to URL: #{url.inspect}"
     redirect url
   end
 
   get '/auth/github/callback' do
-    puts params[:code]
+    puts "received code: #{params[:code]}"
     begin
       access_token = new_client.auth_code.get_token(params[:code], :redirect_uri => redirect_uri)
       user = JSON.parse(access_token.get('/user').body)
