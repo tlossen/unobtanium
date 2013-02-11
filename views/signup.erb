@@ -16,6 +16,14 @@
     <%= text_field_tag "job_title", :value => @form.params[:job_title] %>
   </p>
   <p>
+    <%= label_tag "job_type" %>
+    <%= check_box_tag "job_type_cofounder", :checked => @form.params[:job_type_cofounder] %> cofounder
+    <%= check_box_tag "job_type_freelancer", :checked => @form.params[:job_type_freelancer] %> freelancer
+    <%= check_box_tag "job_type_intern", :checked => @form.params[:job_type_intern] %> intern
+    <%= check_box_tag "job_type_parttime", :checked => @form.params[:job_type_parttime] %> part time
+    <%= check_box_tag "job_type_permanent", :checked => @form.params[:job_type_permanent] %> permanent
+  </p>
+  <p>
     <%= label_tag "company_age" %>
     <%= check_box_tag "company_age_baby", :checked => @form.params[:company_age_baby] %> baby
     <%= check_box_tag "company_age_toddler", :checked => @form.params[:company_age_toddler] %> toddler
