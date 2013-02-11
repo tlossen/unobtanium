@@ -22,11 +22,9 @@ class Signup < Form
   end
 
   def job_type
-    values = []
-    %w[cofounder freelancer intern parttime permanent].each do |option|
-      values << option if params["job_type_#{option}"]
-    end
-    values
+    %w[cofounder freelancer intern parttime permanent].map do |option|
+      option if params[:"job_type_#{option}"]
+    end.compact
   end
 
   def company_age
