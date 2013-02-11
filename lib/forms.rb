@@ -11,17 +11,6 @@ end
 class Signup < Form
   def initialize(params)
     super
-    @errors << "Please enter a valid email" unless email =~ /^.+\@.+\.\w+$/
-  end
-
-  def email
-    (params[:email] || "").strip
-  end
-end
-
-class Signup2 < Form
-  def initialize(params)
-    super
     p @params
     @errors << "Please enter 'Job Title'" if job_title.empty?
     @errors << "Please select 'Company Age'" if company_age.empty?
