@@ -1,11 +1,13 @@
 <h1>signup</h1>
 
+<ul>
 <% @who.each do |key, value| %>
-  <%= "#{key}: #{value}" %>
+  <li><%= "#{key}: #{value}" %></li>
 <% end %>
+</ul>
 
 <% @form.errors.each do |error| %>
-  <%= error %>
+  <p><%= error %></p>
 <% end %>
 
 <% form_tag "/signup/" do %>
@@ -18,6 +20,8 @@
     <%= check_box_tag "company_age_baby", :checked => @form.params[:company_age_baby] %> baby
     <%= check_box_tag "company_age_toddler", :checked => @form.params[:company_age_toddler] %> toddler
     <%= check_box_tag "company_age_child", :checked => @form.params[:company_age_child] %> child
+    <%= check_box_tag "company_age_teenie", :checked => @form.params[:company_age_teenie] %> teenie
+    <%= check_box_tag "company_age_adult", :checked => @form.params[:company_age_teenie] %> adult
   </p>
   <p>
     <%= submit_tag 'go' %>

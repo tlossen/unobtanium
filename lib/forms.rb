@@ -25,6 +25,8 @@ class Signup < Form
     values << 'baby' if params[:company_age_baby]
     values << 'toddler' if params[:company_age_toddler]
     values << 'child' if params[:company_age_child]
+    values << 'teenie' if params[:company_age_teenie]
+    values << 'adult' if params[:company_age_adult]
     values
   end
 end
