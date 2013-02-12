@@ -11,10 +11,16 @@ end
 class Signup < Form
   def initialize(params)
     super
-    p @params
-    @errors << "Please enter 'Job Title'" if job_title.empty?
-    @errors << "Please select 'Job Type'" if job_type.empty?
-    @errors << "Please select 'Company Age'" if company_age.empty?
+    @errors << "Please select one or more Company Age" if company_age.empty?
+    @errors << "Please enter a Job Title" if job_title.empty?
+    @errors << "Please select one or more Job Type" if job_type.empty?
+    @errors << "Please enter your 3 main strengths" if strengths.any?(&:empty?)
+  end
+
+  def company_age
+    %w[baby toddler child teenie adult].map do |option|
+      option if params[:"company_age_#{option}"]
+    end.compact
   end
 
   def job_title
@@ -27,13 +33,12 @@ class Signup < Form
     end.compact
   end
 
-  def company_age
-    values = []
-    values << 'baby' if params[:company_age_baby]
-    values << 'toddler' if params[:company_age_toddler]
-    values << 'child' if params[:company_age_child]
-    values << 'teenie' if params[:company_age_teenie]
-    values << 'adult' if params[:company_age_adult]
-    values
+  def experience
+    params[:experience]
   end
+
+  def strengths
+    [1,2,3].map { |i| (params[:"strenghts_#{i}"] || "").strip }
+  end
+  
 end

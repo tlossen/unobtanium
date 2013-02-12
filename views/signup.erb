@@ -11,6 +11,15 @@
 <% end %>
 
 <% form_tag "/signup/" do %>
+  <h1>My Dream Job</h1>
+  <p>
+    <%= label_tag "company_age" %>
+    <%= check_box_tag "company_age_baby", :checked => @form.params[:company_age_baby] %> baby
+    <%= check_box_tag "company_age_toddler", :checked => @form.params[:company_age_toddler] %> toddler
+    <%= check_box_tag "company_age_child", :checked => @form.params[:company_age_child] %> child
+    <%= check_box_tag "company_age_teenie", :checked => @form.params[:company_age_teenie] %> teenie
+    <%= check_box_tag "company_age_adult", :checked => @form.params[:company_age_teenie] %> adult
+  </p>
   <p>
     <%= label_tag "job_title" %>
     <%= text_field_tag "job_title", :value => @form.params[:job_title] %>
@@ -23,14 +32,19 @@
     <%= check_box_tag "job_type_parttime", :checked => @form.params[:job_type_parttime] %> part time
     <%= check_box_tag "job_type_permanent", :checked => @form.params[:job_type_permanent] %> permanent
   </p>
+  <hr/>
+
   <p>
-    <%= label_tag "company_age" %>
-    <%= check_box_tag "company_age_baby", :checked => @form.params[:company_age_baby] %> baby
-    <%= check_box_tag "company_age_toddler", :checked => @form.params[:company_age_toddler] %> toddler
-    <%= check_box_tag "company_age_child", :checked => @form.params[:company_age_child] %> child
-    <%= check_box_tag "company_age_teenie", :checked => @form.params[:company_age_teenie] %> teenie
-    <%= check_box_tag "company_age_adult", :checked => @form.params[:company_age_teenie] %> adult
+    <%= label_tag "experience" %>
+    <%= select_tag(:experience, :options => %w[<1 1-2 2-4 4-6 6-10 >10], :selected => @form.params[:experience])
   </p>
+  <p>
+    <%= label_tag "strengths" %>
+    <%= text_field_tag "strenghts_1", :value => @form.params[:strenghts_1] %>
+    <%= text_field_tag "strenghts_2", :value => @form.params[:strenghts_2] %>
+    <%= text_field_tag "strenghts_3", :value => @form.params[:strenghts_3] %>
+  </p>
+
   <p>
     <%= submit_tag 'go' %>
   </p>
