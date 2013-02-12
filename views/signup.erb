@@ -11,6 +11,8 @@
 <% end %>
 
 <% form_tag "/signup/" do %>
+
+  <hr/>
   <h1>My Dream Job</h1>
   <p>
     <%= label_tag "company_age" %>
@@ -34,15 +36,22 @@
   </p>
   <hr/>
 
+  <h1>About Me</h1>
   <p>
     <%= label_tag "experience" %>
     <%= select_tag(:experience, :options => %w[<1 1-2 2-4 4-6 6-10 >10], :selected => @form.params[:experience]) %>
   </p>
   <p>
-    <%= label_tag "strengths" %>
-    <%= text_field_tag "strenghts_1", :value => @form.params[:strenghts_1] %>
-    <%= text_field_tag "strenghts_2", :value => @form.params[:strenghts_2] %>
-    <%= text_field_tag "strenghts_3", :value => @form.params[:strenghts_3] %>
+    <%= label_tag "traits" %>
+    <%= text_field_tag "trait_1", :value => @form.params[:trait_1] %><br>
+    <%= text_field_tag "trait_2", :value => @form.params[:trait_2] %><br>
+    <%= text_field_tag "trait_3", :value => @form.params[:trait_3] %>
+  </p>
+  <p>
+    <%= label_tag "technologies" %>
+    <%= text_field_tag "technology_1", :value => @form.params[:technology_1] %><br>
+    <%= text_field_tag "technology_2", :value => @form.params[:technology_2] %><br>
+    <%= text_field_tag "technology_3", :value => @form.params[:technology_3] %>
   </p>
 
   <p>

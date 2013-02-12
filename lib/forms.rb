@@ -6,6 +6,10 @@ class Form
     @params = Hash[params.to_a.map { |k,v| [k.to_sym, v] }]
     @errors = []
   end
+
+  def text_input(name)
+    (params(name.to_sym) || "").strip
+  end
 end
 
 class Signup < Form
@@ -14,7 +18,8 @@ class Signup < Form
     @errors << "Please select one or more Company Age" if company_age.empty?
     @errors << "Please enter a Job Title" if job_title.empty?
     @errors << "Please select one or more Job Type" if job_type.empty?
-    @errors << "Please enter your 3 main strengths" if strengths.any?(&:empty?)
+    @errors << "Please enter your 3 main traits" if traits.any?(&:empty?)
+    @errors << "Please enter your 3 main technologies" if technologies.any?(&:empty?)
   end
 
   def company_age
@@ -24,7 +29,7 @@ class Signup < Form
   end
 
   def job_title
-    (params[:job_title] || "").strip
+    text_input(:job_title)
   end
 
   def job_type
@@ -37,8 +42,12 @@ class Signup < Form
     params[:experience]
   end
 
-  def strengths
-    [1,2,3].map { |i| (params[:"strenghts_#{i}"] || "").strip }
+  def traits
+    [1,2,3].map { |i| text_input("trait_#{i}") }
   end
-  
+
+  def technologies
+    [1,2,3].map { |i| text_input("technology_#{i}") }
+  end
+
 end
