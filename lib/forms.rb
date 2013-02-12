@@ -8,7 +8,7 @@ class Form
   end
 
   def text_input(name)
-    (params(name.to_sym) || "").strip
+    (params[name.to_sym] || "").strip
   end
 end
 
