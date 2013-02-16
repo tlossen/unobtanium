@@ -1,8 +1,8 @@
 require "bundler/setup"
 require "sinatra/base"
-require 'padrino-helpers'
-require 'oauth2'
-require 'json'
+require "padrino-helpers"
+require "oauth2"
+require "json"
 
 load "lib/boot.rb"
 

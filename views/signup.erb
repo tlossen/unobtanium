@@ -15,6 +15,12 @@
   <hr/>
   <h1>My Dream Job</h1>
   <p>
+    <%= label_tag "priorities" %>
+    <%= text_field_tag "priority_1", :value => @form.params[:priority_1] %><br>
+    <%= text_field_tag "priority_2", :value => @form.params[:priority_2] %><br>
+    <%= text_field_tag "priority_3", :value => @form.params[:priority_3] %>
+  </p>
+  <p>
     <%= label_tag "company_age" %>
     <%= check_box_tag "company_age_baby", :checked => @form.params[:company_age_baby] %> baby
     <%= check_box_tag "company_age_toddler", :checked => @form.params[:company_age_toddler] %> toddler
@@ -48,10 +54,8 @@
     <%= text_field_tag "trait_3", :value => @form.params[:trait_3] %>
   </p>
   <p>
-    <%= label_tag "technologies" %>
-    <%= text_field_tag "technology_1", :value => @form.params[:technology_1] %><br>
-    <%= text_field_tag "technology_2", :value => @form.params[:technology_2] %><br>
-    <%= text_field_tag "technology_3", :value => @form.params[:technology_3] %>
+    <%= label_tag "favorite_language" %>
+    <%= text_field_tag "favorite_language", :value => @form.params[:favorite_language] %>
   </p>
 
   <p>
