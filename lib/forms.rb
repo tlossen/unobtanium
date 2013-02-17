@@ -15,12 +15,12 @@ end
 class Signup < Form
   def initialize(params)
     super
-    @errors << "Please enter your 3 main Priorities" if priorities.any?(&:empty?)
-    @errors << "Please enter a Job Title" if position.empty?
-    @errors << "Please select one or more Job Type" if job_type.empty?
-    @errors << "Please enter your 3 main traits" if traits.any?(&:empty?)
-    @errors << "Please enter your Favorite Language" if favorite_language.empty?
-    @errors << "Please enter your Experience" unless experience =~ /^\d+$/
+    @errors << :priorities if priorities.any?(&:empty?)
+    @errors << :position if position.empty?
+    @errors << :job_type if job_type.empty?
+    @errors << :traits if traits.any?(&:empty?)
+    @errors << :favorite_language if favorite_language.empty?
+    @errors << :experience unless experience =~ /^\d+$/
   end
 
   def priorities

@@ -2,7 +2,7 @@
 <div class="row">
 <div class="span2"></div>
 <div class="span8">
-  
+
 <ul>
 <% @who.each do |key, value| %>
   <li><%= "#{key}: #{value}" %></li>
@@ -13,17 +13,17 @@
 
 <h1>My Dream Job</h1>
 <div>
-  <h3>Position</h3>
+  <%= field_header :position, "Position" %>
   <%= text_field_tag "position", :value => @form.params[:position] %>
   <span class="help-block">
     What would be the ideal position for you?
-    Examples: "Founder / CTO in micropayment startup", 
+    Examples: "Founder / CTO in micropayment startup",
     "Junior Rails developer",
     "Lead backend developer for high-traffic e-commerce site"
   </span>
 </div>
 <div>
-  <h3>Contract</h3>
+  <%= field_header :job_type, "Contract" %>
   <ul class="unstyled">
     <li class="choice"><%= check_box_tag "job_type_permanent", :checked => @form.params[:job_type_permanent] %> permanent</li>
     <li class="choice"><%= check_box_tag "job_type_freelancer", :checked => @form.params[:job_type_freelancer] %> freelancer</li>
@@ -37,36 +37,36 @@
   </span>
 </div>
 <div>
-  <h3>I want ...</h3>
+  <%= field_header :priorities, "I want ..." %>
   <%= text_field_tag "priority_1", :value => @form.params[:priority_1] %>
   <%= text_field_tag "priority_2", :value => @form.params[:priority_2] %>
   <%= text_field_tag "priority_3", :value => @form.params[:priority_3] %>
   <span class="help-block">
-    What are the 3 most important things you need to find that would make it your dream job? 
+    What are the 3 most important things you need to find that would make it your dream job?
     Examples: "test-driven development", "small (< 10) teams", "a significant equity stake"
   </span>
 </div>
 
 <h1>About Me</h1>
 <div>
-  <h3>Favorite language</h3>
+  <%= field_header :favorite_language, "Favorite language" %>
   <%= text_field_tag "favorite_language", :value => @form.params[:favorite_language] %>
   <span class="help-block">
     Which programming language is your weapon of choice for day-to-day work?
   </span>
 </div>
 <div>
-  <h3>I am ...</h3>
+  <%= field_header :traits, "I am ..." %>
   <%= text_field_tag "trait_1", :value => @form.params[:trait_1] %>
   <%= text_field_tag "trait_2", :value => @form.params[:trait_2] %>
   <%= text_field_tag "trait_3", :value => @form.params[:trait_3] %>
   <span class="help-block">
-    Give 3 reasons why they should hire you. What do you bring to the table? 
+    Give 3 reasons why they should hire you. What do you bring to the table?
     What are your personal strengths? How would a good friend describe you?
   </span>
 </div>
 <div>
-  <h3>Professional experience</h3>
+  <%= field_header :experience, "Professional experience" %>
   <div class="choice"><%= text_field_tag "experience", :value => @form.params[:experience], :style => "width: 60px" %>&nbsp;&nbsp;years</div>
   <span class="help-block">
     How long have you been earning money by developing software?

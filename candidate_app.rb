@@ -51,5 +51,10 @@ class CandidateApp < Sinatra::Base
       :token_url => 'https://github.com/login/oauth/access_token')
   end
 
+  def field_header(name, text)
+    clazz = @form.errors.include?(name) ? %q{ class="with_error"} : ""
+    "<h3#{clazz}>#{text}</h3>"
+  end
+
 end
 
