@@ -1,64 +1,75 @@
-<h1>signup</h1>
-
+<div class="container">
+<div class="row">
+<div class="span2"></div>
+<div class="span8">
+  
 <ul>
 <% @who.each do |key, value| %>
   <li><%= "#{key}: #{value}" %></li>
 <% end %>
 </ul>
 
-<% @form.errors.each do |error| %>
-  <p><%= error %></p>
-<% end %>
-
 <% form_tag "/signup/" do %>
 
-  <hr/>
-  <h1>My Dream Job</h1>
-  <p>
-    <%= label_tag "priorities" %>
-    <%= text_field_tag "priority_1", :value => @form.params[:priority_1] %><br>
-    <%= text_field_tag "priority_2", :value => @form.params[:priority_2] %><br>
-    <%= text_field_tag "priority_3", :value => @form.params[:priority_3] %>
-  </p>
-  <p>
-    <%= label_tag "company_age" %>
-    <%= check_box_tag "company_age_baby", :checked => @form.params[:company_age_baby] %> baby
-    <%= check_box_tag "company_age_toddler", :checked => @form.params[:company_age_toddler] %> toddler
-    <%= check_box_tag "company_age_child", :checked => @form.params[:company_age_child] %> child
-    <%= check_box_tag "company_age_teenie", :checked => @form.params[:company_age_teenie] %> teenie
-    <%= check_box_tag "company_age_adult", :checked => @form.params[:company_age_teenie] %> adult
-  </p>
-  <p>
-    <%= label_tag "job_title" %>
-    <%= text_field_tag "job_title", :value => @form.params[:job_title] %>
-  </p>
-  <p>
-    <%= label_tag "job_type" %>
-    <%= check_box_tag "job_type_cofounder", :checked => @form.params[:job_type_cofounder] %> cofounder
-    <%= check_box_tag "job_type_freelancer", :checked => @form.params[:job_type_freelancer] %> freelancer
-    <%= check_box_tag "job_type_intern", :checked => @form.params[:job_type_intern] %> intern
-    <%= check_box_tag "job_type_parttime", :checked => @form.params[:job_type_parttime] %> part time
-    <%= check_box_tag "job_type_permanent", :checked => @form.params[:job_type_permanent] %> permanent
-  </p>
-  <hr/>
+<h1>My Dream Job</h1>
+<div class="control-group">
+  <h3>Job Title</h3>
+  <%= text_field_tag "job_title", :value => @form.params[:job_title], :class => "input-xxlarge" %>
+</div>
+<div>
+  <h3>Job type</h3>
+  <ul class="unstyled">
+    <li class="choice"><%= check_box_tag "job_type_permanent", :checked => @form.params[:job_type_permanent] %> permanent</li>
+    <li class="choice"><%= check_box_tag "job_type_freelancer", :checked => @form.params[:job_type_freelancer] %> freelancer</li>
+    <li class="choice"><%= check_box_tag "job_type_cofounder", :checked => @form.params[:job_type_cofounder] %> cofounder</li>
+    <li class="choice"><%= check_box_tag "job_type_intern", :checked => @form.params[:job_type_intern] %> intern</li>
+    <li class="choice"><%= check_box_tag "job_type_parttime", :checked => @form.params[:job_type_parttime] %> part time</li>
+    <li class="choice"><%= check_box_tag "job_type_remote", :checked => @form.params[:job_type_remote] %> remote</li>
+  </ul>
+</div>
+<div>
+  <h3>Priorities</h3>
+  <ol>
+    <li><%= text_field_tag "priority_1", :value => @form.params[:priority_1] %></li>
+    <li><%= text_field_tag "priority_2", :value => @form.params[:priority_2] %></li>
+    <li><%= text_field_tag "priority_3", :value => @form.params[:priority_3] %></li>
+  </ol>
+</div>
+<div>
+  <h3>Company Age</h3>
+  <ul class="unstyled">
+    <li class="choice"><%= check_box_tag "company_age_baby", :checked => @form.params[:company_age_baby] %> baby</li>
+    <li class="choice"><%= check_box_tag "company_age_toddler", :checked => @form.params[:company_age_toddler] %> toddler</li>
+    <li class="choice"><%= check_box_tag "company_age_child", :checked => @form.params[:company_age_child] %> child</li>
+    <li class="choice"><%= check_box_tag "company_age_teenie", :checked => @form.params[:company_age_teenie] %> teenie</li>
+    <li class="choice"><%= check_box_tag "company_age_adult", :checked => @form.params[:company_age_teenie] %> adult</li>
+  </ul>
+</div>
 
-  <h1>About Me</h1>
-  <p>
-    <%= label_tag "experience" %>
-    <%= select_tag(:experience, :options => %w[<1 1-2 2-4 4-6 6-10 >10], :selected => @form.params[:experience]) %>
-  </p>
-  <p>
-    <%= label_tag "traits" %>
-    <%= text_field_tag "trait_1", :value => @form.params[:trait_1] %><br>
-    <%= text_field_tag "trait_2", :value => @form.params[:trait_2] %><br>
-    <%= text_field_tag "trait_3", :value => @form.params[:trait_3] %>
-  </p>
-  <p>
-    <%= label_tag "favorite_language" %>
-    <%= text_field_tag "favorite_language", :value => @form.params[:favorite_language] %>
-  </p>
+<h1>About Me</h1>
+<div>
+  <h3>Favorite Programming Language</h3>
+  <%= text_field_tag "favorite_language", :value => @form.params[:favorite_language] %>
+</div>
+<div>
+  <h3>Professional Experience</h3>
+  <%= select_tag(:experience, :options => %w[<1 1-2 2-4 4-6 6-10 >10], :selected => @form.params[:experience]) %>&nbsp;&nbsp;years
+</div>
+<div>
+  <h3>Traits</h3>
+  <ol>
+    <li><%= text_field_tag "trait_1", :value => @form.params[:trait_1] %></li>
+    <li><%= text_field_tag "trait_2", :value => @form.params[:trait_2] %></li>
+    <li><%= text_field_tag "trait_3", :value => @form.params[:trait_3] %></li>
+  </ol>
+</div>
 
-  <p>
-    <%= submit_tag 'go' %>
-  </p>
+<div style="text-align: center">
+  <button type="submit" class="btn btn-primary btn-large">Done</button>
+</div>
+
 <% end %>
+
+</div>
+</div>
+</div>

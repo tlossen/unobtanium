@@ -34,7 +34,7 @@ class CandidateApp < Sinatra::Base
   end
 
   get '/signup/:new?' do
-    @who = session[:who]
+    @who = session[:who] || {}
     @form = params[:new] ? Form.new : session[:form]
     erb :signup
   end

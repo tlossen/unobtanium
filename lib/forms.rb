@@ -38,7 +38,7 @@ class Signup < Form
   end
 
   def job_type
-    %w[cofounder freelancer intern parttime permanent].map do |option|
+    %w[cofounder freelancer intern parttime permanent remote].map do |option|
       option if params[:"job_type_#{option}"]
     end.compact
   end
