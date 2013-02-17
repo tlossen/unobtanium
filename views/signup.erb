@@ -12,12 +12,18 @@
 <% form_tag "/signup/" do %>
 
 <h1>My Dream Job</h1>
-<div class="control-group">
-  <h3>Job Title</h3>
-  <%= text_field_tag "job_title", :value => @form.params[:job_title], :class => "input-xxlarge" %>
+<div>
+  <h3>Position</h3>
+  <%= text_field_tag "position", :value => @form.params[:position] %>
+  <span class="help-block">
+    What would be the ideal position for you?
+    Examples: "Founder / CTO in micropayment startup", 
+    "Junior Rails developer",
+    "Lead backend developer for high-traffic e-commerce site"
+  </span>
 </div>
 <div>
-  <h3>Job type</h3>
+  <h3>Contract</h3>
   <ul class="unstyled">
     <li class="choice"><%= check_box_tag "job_type_permanent", :checked => @form.params[:job_type_permanent] %> permanent</li>
     <li class="choice"><%= check_box_tag "job_type_freelancer", :checked => @form.params[:job_type_freelancer] %> freelancer</li>
@@ -26,45 +32,48 @@
     <li class="choice"><%= check_box_tag "job_type_parttime", :checked => @form.params[:job_type_parttime] %> part time</li>
     <li class="choice"><%= check_box_tag "job_type_remote", :checked => @form.params[:job_type_remote] %> remote</li>
   </ul>
+  <span class="help-block">
+    What contract options are you willing to consider?
+  </span>
 </div>
 <div>
-  <h3>Priorities</h3>
-  <ol>
-    <li><%= text_field_tag "priority_1", :value => @form.params[:priority_1] %></li>
-    <li><%= text_field_tag "priority_2", :value => @form.params[:priority_2] %></li>
-    <li><%= text_field_tag "priority_3", :value => @form.params[:priority_3] %></li>
-  </ol>
-</div>
-<div>
-  <h3>Company Age</h3>
-  <ul class="unstyled">
-    <li class="choice"><%= check_box_tag "company_age_baby", :checked => @form.params[:company_age_baby] %> baby</li>
-    <li class="choice"><%= check_box_tag "company_age_toddler", :checked => @form.params[:company_age_toddler] %> toddler</li>
-    <li class="choice"><%= check_box_tag "company_age_child", :checked => @form.params[:company_age_child] %> child</li>
-    <li class="choice"><%= check_box_tag "company_age_teenie", :checked => @form.params[:company_age_teenie] %> teenie</li>
-    <li class="choice"><%= check_box_tag "company_age_adult", :checked => @form.params[:company_age_teenie] %> adult</li>
-  </ul>
+  <h3>I want ...</h3>
+  <%= text_field_tag "priority_1", :value => @form.params[:priority_1] %>
+  <%= text_field_tag "priority_2", :value => @form.params[:priority_2] %>
+  <%= text_field_tag "priority_3", :value => @form.params[:priority_3] %>
+  <span class="help-block">
+    What are the 3 most important things you need to find that would make it your dream job? 
+    Examples: "test-driven development", "small (< 10) teams", "a significant equity stake"
+  </span>
 </div>
 
 <h1>About Me</h1>
 <div>
-  <h3>Favorite Programming Language</h3>
+  <h3>Favorite language</h3>
   <%= text_field_tag "favorite_language", :value => @form.params[:favorite_language] %>
+  <span class="help-block">
+    Which programming language is your weapon of choice for day-to-day work?
+  </span>
 </div>
 <div>
-  <h3>Professional Experience</h3>
-  <%= select_tag(:experience, :options => %w[<1 1-2 2-4 4-6 6-10 >10], :selected => @form.params[:experience]) %>&nbsp;&nbsp;years
+  <h3>I am ...</h3>
+  <%= text_field_tag "trait_1", :value => @form.params[:trait_1] %>
+  <%= text_field_tag "trait_2", :value => @form.params[:trait_2] %>
+  <%= text_field_tag "trait_3", :value => @form.params[:trait_3] %>
+  <span class="help-block">
+    Give 3 reasons why they should hire you. What do you bring to the table? 
+    What are your personal strengths? How would a good friend describe you?
+  </span>
 </div>
 <div>
-  <h3>Traits</h3>
-  <ol>
-    <li><%= text_field_tag "trait_1", :value => @form.params[:trait_1] %></li>
-    <li><%= text_field_tag "trait_2", :value => @form.params[:trait_2] %></li>
-    <li><%= text_field_tag "trait_3", :value => @form.params[:trait_3] %></li>
-  </ol>
+  <h3>Professional experience</h3>
+  <div class="choice"><%= text_field_tag "experience", :value => @form.params[:experience], :style => "width: 60px" %>&nbsp;&nbsp;years</div>
+  <span class="help-block">
+    How long have you been earning money by developing software?
+  </span>
 </div>
 
-<div style="text-align: center">
+<div id="buttons">
   <button type="submit" class="btn btn-primary btn-large">Done</button>
 </div>
 
