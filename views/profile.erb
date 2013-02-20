@@ -1,0 +1,7 @@
+<h1>Profile</h1>
+
+<ul>
+<% @candidate.as_json.each do |key, value| %>
+  <li><%= key %>: <%= value.inspect %></li>
+<% end %>
+</ul>

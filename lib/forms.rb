@@ -15,12 +15,23 @@ end
 class Signup < Form
   def initialize(params)
     super
-    @errors << :priorities if priorities.any?(&:empty?)
     @errors << :position if position.empty?
-    @errors << :job_type if job_type.empty?
+    @errors << :job_type if job_types.empty?
+    @errors << :priorities if priorities.any?(&:empty?)
+    @errors << :language if language.empty?
     @errors << :traits if traits.any?(&:empty?)
-    @errors << :favorite_language if favorite_language.empty?
     @errors << :experience unless experience =~ /^\d+$/
+  end
+
+  def result
+    Hash[
+      position: position,
+      job_types: job_types,
+      priorities: priorities,
+      language: language,
+      traits: traits,
+      experience: experience.to_i
+    ]
   end
 
   def priorities
@@ -31,22 +42,22 @@ class Signup < Form
     text_input(:position)
   end
 
-  def job_type
+  def job_types
     %w[cofounder freelancer intern parttime permanent remote].map do |option|
       option if params[:"job_type_#{option}"]
     end.compact
   end
 
   def experience
-    params[:experience]
+    text_input(:experience)
   end
 
   def traits
     [1,2,3].map { |i| text_input("trait_#{i}") }
   end
 
-  def favorite_language
-    text_input(:favorite_language)
+  def language
+    text_input(:language)
   end
 
 

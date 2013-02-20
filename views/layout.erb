@@ -3,63 +3,9 @@
   <head>
     <title>Unobtanium</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href='http://fonts.googleapis.com/css?family=Coming+Soon|Viga' rel='stylesheet' type='text/css'>
-    <style type="text/css" media="screen">
-      input[type=text] {
-        width: 97%;
-        height: 35px;
-        font-family: "Coming Soon";
-        font-size: 30px;
-        border-color: #999;
-        border-width: 2px;
-        color: #00b;
-        overflow: visible;
-      }
-      input[type=checkbox] {
-        width: 20px;
-        height: 20px;
-      }
-      .with_error {
-        color: red;
-      }
-      .choice {
-        font-size: 24px;
-      }
-      .container {
-        background-image: url('/img/paper_squared5.jpg');
-        padding-bottom: 30px;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-      }
-      body {
-        background-color: #333;
-      }
-      h1 {
-        font-family: "Viga";
-        padding-bottom: 10px;
-        border-bottom: 3px solid #333;
-        margin-top: 54px;
-        margin-bottom: 24px;
-      }
-      h3 {
-        font-family: "Viga";
-        margin-top: 24px;
-      }
-      ul {
-        padding-left: 24px;
-      }
-      ol {
-        padding-left: 6px;
-      }
-      #buttons {
-        text-align: center;
-        margin-top: 48px;
-      }
-    </style>
+    <%= yield_content :head %>
   </head>
   <body>
-
     <%= yield %>
-
   </body>
 </html>

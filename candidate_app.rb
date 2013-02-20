@@ -40,15 +40,28 @@ class CandidateApp < Sinatra::Base
   end
 
   post '/signup/' do
-    session[:form] = Signup.new(params)
-    redirect '/signup/'
+    form = session[:form] = Signup.new(params)
+    if form.errors.empty?
+      session[:candidate] = Candidate.create(form.result.merge(session[:who] || {}))
+      redirect '/profile'
+    else
+      redirect '/signup/'
+    end
+  end
+
+  get '/profile' do
+    @candidate = session[:candidate]
+    erb :profile
   end
 
   def github_client
-    OAuth2::Client.new('77c712b815c7ce3ec6e2', '675e7872c077ed2b2907e7752ae9cd7b2f87176b',
-      :site => 'https://api.github.com',
-      :authorize_url => 'https://github.com/login/oauth/authorize',
-      :token_url => 'https://github.com/login/oauth/access_token')
+    OAuth2::Client.new(
+      '77c712b815c7ce3ec6e2', 
+      '675e7872c077ed2b2907e7752ae9cd7b2f87176b',
+      site: 'https://api.github.com',
+      authorize_url: 'https://github.com/login/oauth/authorize',
+      token_url: 'https://github.com/login/oauth/access_token'
+    )
   end
 
   def field_header(name, text)
