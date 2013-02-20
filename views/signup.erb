@@ -15,7 +15,7 @@
       width: 20px;
       height: 20px;
     }
-    .with_error {
+    .with_error, .alert-error {
       color: red;
     }
     .choice {
@@ -65,6 +65,12 @@
   <li><%= "#{key}: #{value}" %></li>
 <% end %>
 </ul>
+
+<% unless @form.errors.empty? %>
+<div class="alert alert-error">
+  Some values are missing or invalid. Please check any field which is red.
+</div>
+<% end %>
 
 <% form_tag "/signup/" do %>
 
