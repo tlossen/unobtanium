@@ -12,6 +12,7 @@ class CandidateApp < Sinatra::Base
   set :session_secret, 'yadayadax'
 
   get '/' do
+    @example = Candidate.first
     erb :index
   end
 

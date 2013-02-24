@@ -1,6 +1,9 @@
 <h1>index</h1>
 
-<a href="/auth/github">sign in</a>
+<a href="/auth/github">log in or sign up with github</a>
 
-<a href="/signup/">signup</a>
-<a href="/signup2/">signup 2</a>
+<ul>
+<% @example.as_json.each do |key, value| %>
+  <li><%= key %>: <%= value.inspect %></li>
+<% end %>
+</ul>
