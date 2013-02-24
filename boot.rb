@@ -10,5 +10,5 @@ require "json"
 $:.unshift Dir.pwd + "/lib"
 require "forms"
 require "token"
-require "candidate"
+# require "candidate"
 
