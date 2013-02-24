@@ -24,13 +24,19 @@ class CandidateApp < Sinatra::Base
     access_token = github_client.auth_code.get_token(params[:code])
     puts "token: #{access_token.token}"
     user = JSON.parse(access_token.get('/user').body)
-    session[:who] = Hash[
-      name: user["name"],
-      email: user["email"],
-      gravatar: user["gravatar_id"],
-      location: user["location"]
-    ]
-    redirect "/signup/new"
+    candidate = Candidate.where(:email => user["email"]).first
+    if candidate
+      session[:candidate] = candidate
+      redirect "/profile"
+    else
+      session[:who] = Hash[
+        name: user["name"],
+        email: user["email"],
+        gravatar: user["gravatar_id"],
+        location: user["location"]
+      ]
+      redirect "/signup/new"
+    end
   end
 
   get '/signup/:new?' do
