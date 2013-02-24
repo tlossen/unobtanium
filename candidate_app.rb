@@ -6,7 +6,8 @@ class CandidateApp < Sinatra::Base
   set :session_secret, 'yadayadax'
 
   get '/' do
-    @example = Candidate.first
+    @url = ENV['MONGOHQ_URL']
+    # @example = Candidate.first
     erb :index
   end
 
