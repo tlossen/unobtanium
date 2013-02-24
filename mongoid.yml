@@ -1,8 +1,8 @@
-development:
+production:
   sessions:
     default:
       hosts:
-        - linus.mongohq.com:10081
-      database: unobtanium
+        - linus.mongohq.com:10072
+      database: app11773087
       username: hello
-      password: JRX859c8KfNz5EeW
+      password: 2b669425844e720b

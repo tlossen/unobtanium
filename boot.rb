@@ -5,7 +5,7 @@ require "oauth2"
 require "json"
 
 require "mongoid"
-Mongoid.load!("mongoid.yml", :development)
+Mongoid.load!("mongoid.yml", :production)
 
 $:.unshift Dir.pwd + "/lib"
 require "forms"
