@@ -1,8 +1,7 @@
 production:
   sessions:
     default:
-      hosts:
-        - linus.mongohq.com:10072
-      database: app11773087
-      username: hello
-      password: 2b669425844e720b
+      uri: <%= ENV['MONGOHQ_URL'] %>
+      options:
+        skip_version_check: true
+        safe: true

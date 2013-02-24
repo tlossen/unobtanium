@@ -4,11 +4,11 @@ require "padrino-helpers"
 require "oauth2"
 require "json"
 
-# require "mongoid"
-# Mongoid.load!("mongoid.yml", :production)
+require "mongoid"
+Mongoid.load!("mongoid.yml", :production)
 
 $:.unshift Dir.pwd + "/lib"
 require "forms"
 require "token"
-# require "candidate"
+require "candidate"
 
