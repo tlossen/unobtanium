@@ -6,6 +6,7 @@ class CandidateApp < Sinatra::Base
   set :session_secret, 'yadayadax'
 
   get '/' do
+    @candidate = Candidate.first
     erb :index
   end
 
@@ -18,7 +19,7 @@ class CandidateApp < Sinatra::Base
     access_token = github_client.auth_code.get_token(params[:code])
     puts "token: #{access_token.token}"
     user = JSON.parse(access_token.get('/user').body)
-    query = Candidate.where(:email => user["email"])
+    query = Candidate.where(email: user["email"])
     if query.exists?
       session[:candidate] = query.first
       redirect "/profile"
