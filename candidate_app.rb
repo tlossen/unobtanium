@@ -34,7 +34,7 @@ class CandidateApp < Sinatra::Base
   end
 
   get '/signup/:new?' do
-    @form = params[:new] ? Signup.new("/signup/") : session[:form]
+    @form = params[:new] ? Form.new("/signup/") : session[:form]
     erb :signup
   end
 
