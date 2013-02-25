@@ -1,6 +1,6 @@
 class Candidate
   include Mongoid::Document
-  include Mongoid::Timestamps::Created
+  include Mongoid::Timestamps
 
   field :ref_code, type: String, default: ->{ Token.create }
 

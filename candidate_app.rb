@@ -34,11 +34,13 @@ class CandidateApp < Sinatra::Base
   end
 
   get '/signup/:new?' do
+    ensure_authorized
     @form = params[:new] ? Form.new("/signup/") : session[:form]
     erb :signup
   end
 
   post '/signup/' do
+    ensure_authorized
     form = session[:form] = Signup.new("/signup/", params)
     if form.errors.empty?
       session[:candidate] = Candidate.create(form.result.merge(session[:auth] || {}))
@@ -49,16 +51,19 @@ class CandidateApp < Sinatra::Base
   end
 
   get '/profile' do
+    ensure_authorized
     @candidate = session[:candidate]
     erb :profile
   end
 
   get '/edit/:new?' do
+    ensure_authorized
     @form = params[:new] ? Signup.create("/edit/", session[:candidate]) : session[:form]
     erb :signup
   end
 
   post '/edit/' do
+    ensure_authorized
     form = session[:form] = Signup.new("/edit/", params)
     if form.errors.empty?
       session[:candidate].update_attributes(form.result)
@@ -68,6 +73,9 @@ class CandidateApp < Sinatra::Base
     end
   end
 
+  def ensure_authorized
+    redirect '/auth/github' and return unless session[:auth]
+  end
 
   def github_client
     OAuth2::Client.new(
