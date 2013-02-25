@@ -3,7 +3,7 @@ require "./boot.rb"
 class CandidateApp < Sinatra::Base
   register Padrino::Helpers
   enable :sessions
-  set :session_secret, 'yadayadax'
+  set :session_secret, 'bedxpokwvgfmn'
 
   get '/' do
     @candidate = Candidate.first
