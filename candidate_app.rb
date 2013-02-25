@@ -36,14 +36,14 @@ class CandidateApp < Sinatra::Base
   get '/signup/:new?' do
     ensure_authorized
     @form = params[:new] ? Form.new("/signup/") : session[:form]
-    erb :signup
+    erb :candidate
   end
 
   post '/signup/' do
     ensure_authorized
-    form = session[:form] = Signup.new("/signup/", params)
+    form = session[:form] = CandidateForm.new("/signup/", params)
     if form.errors.empty?
-      session[:candidate] = Candidate.create(form.result.merge(session[:auth] || {}))
+      session[:candidate] = Candidate.create(form.result.merge(session[:auth]))
       redirect '/profile'
     else
       redirect '/signup/'
@@ -51,20 +51,20 @@ class CandidateApp < Sinatra::Base
   end
 
   get '/profile' do
-    ensure_authorized
+    ensure_candidate
     @candidate = session[:candidate]
     erb :profile
   end
 
   get '/edit/:new?' do
-    ensure_authorized
-    @form = params[:new] ? Signup.create("/edit/", session[:candidate]) : session[:form]
-    erb :signup
+    ensure_candidate
+    @form = params[:new] ? CandidateForm.create("/edit/", session[:candidate]) : session[:form]
+    erb :candidate
   end
 
   post '/edit/' do
-    ensure_authorized
-    form = session[:form] = Signup.new("/edit/", params)
+    ensure_candidate
+    form = session[:form] = CandidateForm.new("/edit/", params)
     if form.errors.empty?
       session[:candidate].update_attributes(form.result)
       redirect '/profile'
@@ -75,6 +75,10 @@ class CandidateApp < Sinatra::Base
 
   def ensure_authorized
     redirect '/auth/github' and return unless session[:auth]
+  end
+
+  def ensure_candidate
+    redirect '/auth/github' and return unless session[:candidate]
   end
 
   def github_client
@@ -88,7 +92,7 @@ class CandidateApp < Sinatra::Base
   end
 
   def field_header(name, text)
-    clazz = @form.errors.include?(name) ? %q{ class="with_error"} : ""
+    clazz = @form.errors.include?(name) ? %q{ class="with-error"} : ""
     "<h3#{clazz}>#{text}</h3>"
   end
 

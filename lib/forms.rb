@@ -13,7 +13,7 @@ class Form
   end
 end
 
-class Signup < Form
+class CandidateForm < Form
 
   def self.create(target, candidate)
     params = Hash[
