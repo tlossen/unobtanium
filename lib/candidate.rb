@@ -2,12 +2,11 @@ class Candidate
   include Mongoid::Document
   include Mongoid::Timestamps::Created
 
-  field :referral_code, type: String, default: ->{ Token.create }
+  field :ref_code, type: String, default: ->{ Token.create }
 
   # from github
   field :name, type: String
   field :email, type: String
-  field :gravatar, type: String
   field :location, type: String
 
   # from signup form
@@ -17,4 +16,5 @@ class Candidate
   field :language, type: String
   field :traits, type: Array
   field :experience, type: Integer
+
 end

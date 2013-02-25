@@ -1,7 +1,92 @@
+<% content_for :head do %>
+  <link href='http://fonts.googleapis.com/css?family=Coming+Soon|Viga' rel='stylesheet' type='text/css'>
+  <style type="text/css" media="screen">
+    .container {
+      background-color: white;
+      padding-bottom: 30px;
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+    }
+    body {
+      background-color: #333;
+      font-size: 20px;
+    }
+    h1 {
+      font-family: "Viga";
+      padding-bottom: 10px;
+      border-bottom: 2px solid #333;
+      margin-top: 54px;
+      margin-bottom: 24px;
+    }
+    h3 {
+      font-family: "Viga";
+      margin-top: 24px;
+    }
+    #buttons {
+      text-align: center;
+      margin-top: 48px;
+    }
+  </style>
+<% end %>
+
+<div class="container">
+<div class="row">
+<div class="span2"></div>
+<div class="span8">
+
+
 <h1>Profile</h1>
 
+<h3>Name</h3>
+<%= @candidate.name %>
+
+<h3>Email</h3>
+<%= @candidate.email %>
+
+<h3>Location</h3>
+<%= @candidate.location %>
+
+
+<h1>My Dream Job</h1>
+
+<h3>Position</h3>
+<%= @candidate.position %>
+
+<h3>Contract</h3>
 <ul>
-<% @candidate.as_json.each do |key, value| %>
-  <li><%= key %>: <%= value.inspect %></li>
+<% @candidate.job_types.each do |type| %>
+  <li><%= type %></li>
 <% end %>
 </ul>
+
+<h3>I want ...</h3>
+<ul>
+<% @candidate.priorities.each do |type| %>
+  <li><%= type %></li>
+<% end %>
+</ul>
+
+
+<h1>About Me</h1>
+
+<h3>Favorite language</h3>
+<%= @candidate.language %>
+
+<h3>I am ...</h3>
+<ul>
+<% @candidate.traits.each do |type| %>
+  <li><%= type %></li>
+<% end %>
+</ul>
+
+<h3>Professional experience</h3>
+<%= @candidate.experience %> years
+
+<div id="buttons">
+  <a href="/edit/new" class="btn btn-primary btn-large">Edit</a>
+</div>
+
+
+</div>
+</div>
+</div>

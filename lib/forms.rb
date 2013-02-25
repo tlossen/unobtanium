@@ -1,7 +1,8 @@
 class Form
-  attr_reader :params, :errors
+  attr_reader :target, :params, :errors
 
-  def initialize(params = nil)
+  def initialize(target, params = nil)
+    @target = target
     params ||= {}
     @params = Hash[params.to_a.map { |k,v| [k.to_sym, v] }]
     @errors = []
@@ -13,7 +14,26 @@ class Form
 end
 
 class Signup < Form
-  def initialize(params)
+
+  def self.create(target, candidate)
+    params = Hash[
+      position: candidate.position,
+      priority_1: candidate.priorities[0],
+      priority_2: candidate.priorities[1],
+      priority_3: candidate.priorities[2],
+      language: candidate.language,
+      trait_1: candidate.traits[0],
+      trait_2: candidate.traits[1],
+      trait_3: candidate.traits[2],
+      experience: candidate.experience.to_s
+    ]
+    candidate.job_types.each do |option|
+      params[:"job_type_#{option}"] = 1
+    end
+    new(target, params)
+  end
+
+  def initialize(target, params)
     super
     @errors << :position if position.empty?
     @errors << :job_type if job_types.empty?
@@ -59,6 +79,5 @@ class Signup < Form
   def language
     text_input(:language)
   end
-
 
 end

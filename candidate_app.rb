@@ -19,31 +19,29 @@ class CandidateApp < Sinatra::Base
     access_token = github_client.auth_code.get_token(params[:code])
     puts "token: #{access_token.token}"
     user = JSON.parse(access_token.get('/user').body)
-    query = Candidate.where(email: user["email"])
-    if query.exists?
-      session[:candidate] = query.first
+    session[:auth] = Hash[
+      name: user["name"],
+      email: user["email"],
+      location: user["location"]
+    ]
+    candidate = Candidate.where(email: user["email"]).first
+    if candidate
+      session[:candidate] = candidate
       redirect "/profile"
     else
-      session[:who] = Hash[
-        name: user["name"],
-        email: user["email"],
-        gravatar: user["gravatar_id"],
-        location: user["location"]
-      ]
       redirect "/signup/new"
     end
   end
 
   get '/signup/:new?' do
-    @who = session[:who] || {}
-    @form = params[:new] ? Form.new : session[:form]
+    @form = params[:new] ? Signup.new("/signup/") : session[:form]
     erb :signup
   end
 
   post '/signup/' do
-    form = session[:form] = Signup.new(params)
+    form = session[:form] = Signup.new("/signup/", params)
     if form.errors.empty?
-      session[:candidate] = Candidate.create(form.result.merge(session[:who] || {}))
+      session[:candidate] = Candidate.create(form.result.merge(session[:auth] || {}))
       redirect '/profile'
     else
       redirect '/signup/'
@@ -54,6 +52,22 @@ class CandidateApp < Sinatra::Base
     @candidate = session[:candidate]
     erb :profile
   end
+
+  get '/edit/:new?' do
+    @form = params[:new] ? Signup.create("/edit/", session[:candidate]) : session[:form]
+    erb :signup
+  end
+
+  post '/edit/' do
+    form = session[:form] = Signup.new("/edit/", params)
+    if form.errors.empty?
+      session[:candidate].update_attributes(form.result)
+      redirect '/profile'
+    else
+      redirect '/edit/'
+    end
+  end
+
 
   def github_client
     OAuth2::Client.new(
