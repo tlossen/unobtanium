@@ -33,7 +33,7 @@ class Signup < Form
     new(target, params)
   end
 
-  def initialize(target, params)
+  def initialize(target, params = nil)
     super
     @errors << :position if position.empty?
     @errors << :job_type if job_types.empty?
