@@ -134,6 +134,13 @@
     How long have you been earning money by developing software?
   </span>
 </div>
+<div>
+  <%= field_header :location, "Location" %>
+  <%= text_field_tag "location", :value => @form.params[:location] %>
+  <span class="help-block">
+    Where do you live?
+  </span>
+</div>
 
 <div id="buttons">
   <button type="submit" class="btn btn-primary btn-large">Save</button>

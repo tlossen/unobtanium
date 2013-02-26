@@ -26,6 +26,11 @@
       text-align: center;
       margin-top: 48px;
     }
+    .url {
+      font-size: 16px;
+      color: #666;
+      padding: 8px;
+    }
   </style>
 <% end %>
 
@@ -35,16 +40,14 @@
 <div class="span8">
 
 
-<h1>Profile</h1>
+<h1><%= @candidate.name %></h1>
 
-<h3>Name</h3>
-<%= @candidate.name %>
-
-<h3>Email</h3>
 <%= @candidate.email %>
 
-<h3>Location</h3>
-<%= @candidate.location %>
+<h3>Personal referral link</h3>
+<pre class="url"><%= ref_link(@candidate) %></pre>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="<%= ref_link(@candidate) %>" data-text="Unobtanium -- Let your dream job find *you*!" data-size="large" data-count="none" data-dnt="true">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 
 <h1>My Dream Job</h1>
@@ -82,10 +85,12 @@
 <h3>Professional experience</h3>
 <%= @candidate.experience %> years
 
+<h3>Location</h3>
+<%= @candidate.location %>
+
 <div id="buttons">
   <a href="/edit/new" class="btn btn-primary btn-large">Edit</a>
 </div>
-
 
 </div>
 </div>

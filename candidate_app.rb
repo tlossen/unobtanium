@@ -10,6 +10,13 @@ class CandidateApp < Sinatra::Base
     erb :index
   end
 
+  if "development" == ENV["RACK_ENV"]
+    get '/auth/fake' do
+      session[:candidate] = Candidate.where(email: "tim@lossen.de").first
+      redirect '/profile'
+    end 
+  end
+
   get '/auth/github' do
     redirect(github_client.auth_code.authorize_url)
   end
@@ -19,23 +26,31 @@ class CandidateApp < Sinatra::Base
     access_token = github_client.auth_code.get_token(params[:code])
     puts "token: #{access_token.token}"
     user = JSON.parse(access_token.get('/user').body)
-    session[:auth] = Hash[
-      name: user["name"],
-      email: user["email"],
-      location: user["location"]
-    ]
     candidate = Candidate.where(email: user["email"]).first
     if candidate
       session[:candidate] = candidate
       redirect "/profile"
     else
+      session[:auth] = Hash[
+        name: user["name"],
+        email: user["email"],
+        referrer: session[:referrer]
+      ]
+      session[:location] = user["location"]
       redirect "/signup/new"
     end
   end
 
-  get '/signup/:new?' do
+  get '/signup/new' do
     ensure_authorized
-    @form = params[:new] ? Form.new("/signup/") : session[:form]
+    @form = Form.new("/signup/")
+    @form.params[:location] = session[:location]
+    erb :candidate
+  end
+
+  get '/signup/' do
+    ensure_authorized
+    @form = session[:form]
     erb :candidate
   end
 
@@ -73,6 +88,12 @@ class CandidateApp < Sinatra::Base
     end
   end
 
+  get '/invite/:code' do
+    referrer = Candidate.where(ref_code: params[:code]).first
+    session[:referrer] = referrer.email if referrer
+    redirect '/'
+  end
+
   def ensure_authorized
     redirect '/auth/github' and return unless session[:auth]
   end
@@ -94,6 +115,10 @@ class CandidateApp < Sinatra::Base
   def field_header(name, text)
     clazz = @form.errors.include?(name) ? %q{ class="with-error"} : ""
     "<h3#{clazz}>#{text}</h3>"
+  end
+
+  def ref_link(candidate)
+    "http://app.unobtanium.cc/invite/#{candidate.ref_code}"
   end
 
 end

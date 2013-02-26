@@ -25,7 +25,8 @@ class CandidateForm < Form
       trait_1: candidate.traits[0],
       trait_2: candidate.traits[1],
       trait_3: candidate.traits[2],
-      experience: candidate.experience.to_s
+      experience: candidate.experience.to_s,
+      location: candidate.location
     ]
     candidate.job_types.each do |option|
       params[:"job_type_#{option}"] = 1
@@ -41,6 +42,7 @@ class CandidateForm < Form
     @errors << :language if language.empty?
     @errors << :traits if traits.any?(&:empty?)
     @errors << :experience unless experience =~ /^\d+$/
+    @errors << :location if location.empty?
   end
 
   def result
@@ -50,7 +52,8 @@ class CandidateForm < Form
       priorities: priorities,
       language: language,
       traits: traits,
-      experience: experience.to_i
+      experience: experience.to_i,
+      location: location
     ]
   end
 
@@ -78,6 +81,10 @@ class CandidateForm < Form
 
   def language
     text_input(:language)
+  end
+
+  def location
+    text_input(:location)
   end
 
 end
