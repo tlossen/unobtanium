@@ -1,4 +1,6 @@
 $stdout.sync = true
 
-require './candidate_app'
+require "./boot.rb"
+require "./candidate_app"
+
 run CandidateApp

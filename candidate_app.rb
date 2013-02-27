@@ -1,5 +1,3 @@
-require "./boot.rb"
-
 class CandidateApp < Sinatra::Base
   register Padrino::Helpers
   enable :sessions
