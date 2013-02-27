@@ -6,8 +6,11 @@ class CandidateApp < Sinatra::Base
   set :session_secret, 'bedxpokwvgfmn'
 
   get '/' do
-    @candidate = Candidate.first
     erb :index
+  end
+
+  get '/check' do
+    Candidate.count.to_s
   end
 
   if "development" == ENV["RACK_ENV"]
