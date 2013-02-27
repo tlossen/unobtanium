@@ -13,7 +13,7 @@ class CandidateApp < Sinatra::Base
   if "development" == ENV["RACK_ENV"]
     get '/auth/fake' do
       session[:candidate] = Candidate.where(email: "tim@lossen.de").first
-      redirect '/profile'
+      redirect '/me'
     end 
   end
 
@@ -29,7 +29,7 @@ class CandidateApp < Sinatra::Base
     candidate = Candidate.where(email: user["email"]).first
     if candidate
       session[:candidate] = candidate
-      redirect "/profile"
+      redirect "/me"
     else
       session[:auth] = Hash[
         name: user["name"],
@@ -59,13 +59,13 @@ class CandidateApp < Sinatra::Base
     form = session[:form] = CandidateForm.new("/signup/", params)
     if form.errors.empty?
       session[:candidate] = Candidate.create(form.result.merge(session[:auth]))
-      redirect '/profile'
+      redirect '/me'
     else
       redirect '/signup/'
     end
   end
 
-  get '/profile' do
+  get '/me' do
     ensure_candidate
     @candidate = session[:candidate]
     erb :profile
@@ -82,7 +82,7 @@ class CandidateApp < Sinatra::Base
     form = session[:form] = CandidateForm.new("/edit/", params)
     if form.errors.empty?
       session[:candidate].update_attributes(form.result)
-      redirect '/profile'
+      redirect '/me'
     else
       redirect '/edit/'
     end
