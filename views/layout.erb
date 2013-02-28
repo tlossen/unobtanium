@@ -3,9 +3,48 @@
   <head>
     <title>Unobtanium</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <style type="text/css" media="screen">
+      .bar {
+        margin-top: 20px;
+        text-align:right;
+      }
+    </style>
+
     <%= yield_content :head %>
+
   </head>
   <body>
-    <%= yield %>
+
+    <div class="container">
+
+    <div class="row">
+      <div class="span10 bar">
+        <a href="http://unobtanium.cc"><img src="/img/logo_60.jpg"></a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span2"></div>
+      <div class="span8">
+
+      <%= yield %>
+
+      </div>
+    </div>
+
+    </div>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-2260866-15']);
+      _gaq.push(['_setDomainName', 'unobtanium.cc']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+
   </body>
 </html>
